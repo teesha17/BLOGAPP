@@ -49,4 +49,12 @@ const userSchema = new mongoose.Schema({
     }
 });
 
+userSchema.pre("save",async function(){
+    if(this.isModified("password"))
+    {
+        next();
+    }
+    this.password=await bycrypt.hash
+})
+
 export const User=mongoose.model("User",userSchema);
